@@ -1,0 +1,7 @@
+	{
+        "name": "Censo 2010 - IBGE",
+        "dataColors": ["#063b6b", "#fcfdfa", "#68705b", "#3e514b", "#24435b", "#cad4d8", "#7d94a7", "#BFA77A"],
+        "background":"#7d94a7",
+        "foreground": "#fcfdfa",
+        "tableAccent": "#063b6b"
+    }

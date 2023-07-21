@@ -1,0 +1,6 @@
+Site
+https://servicodados.ibge.gov.br/api/docs
+
+
+Get
+https://servicodados.ibge.gov.br/api/v1/localidades/municipios

@@ -1,0 +1,7 @@
+{
+    "name": "Valor Econômico",
+    "dataColors": ["#027368", "#56BFB5", "#BFA77A", "#F2F2F2", "#595959", "#15788F", "#4E5255", "#F2F2F2"],
+    "background":"#FFFFFF",
+    "foreground": "#56BFB5",
+    "tableAccent": "#027368"
+}

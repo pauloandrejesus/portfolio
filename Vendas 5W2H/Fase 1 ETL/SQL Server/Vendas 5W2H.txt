@@ -1,0 +1,11 @@
+Servidor: 
+dbvendasweb.sqlserver.dbaas.com.br
+
+Banco de Dados:
+dbVendasWeb
+
+Nome do Usuário:
+dbVendasWeb
+
+Senha:
+PowerBI

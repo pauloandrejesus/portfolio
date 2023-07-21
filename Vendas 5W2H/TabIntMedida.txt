@@ -1,0 +1,238 @@
+Atualização = 
+FORMAT( MAX ( 'TabDimAtualização'[Momento da Última Atualização]), "ddd dd/mm/yyyy", "pt-br" )
+
+Camisetas (Soma) = SUM(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas (Média) = AVERAGE(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas (Mínimo) = MIN(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas (Máximo) = MAX(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas (Desvio Padrão) = STDEV.P(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas (Variação) = VAR.P(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas (Mediana) = MEDIAN(TabFatNotaFiscalItem[Quantidade])
+
+Camisetas = [Camisetas (Soma)]
+
+
+Prazo de Entrega (Média) = 
+AVERAGEX (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+
+Prazo de Entrega (Mínimo) = 
+MINX (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+Prazo de Entrega (Máximo) = 
+MAXX (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+Prazo de Entrega (Desvio Padrão) = 
+STDEVX.P (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+Prazo de Entrega (Variação) = 
+VARX.P (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+Prazo de Entrega (Mediana) = 
+MEDIANX (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+Prazo de Entrega (Soma) = 
+SUMX (
+    'TabFatNotaFiscalCabeçalho',
+    DATEDIFF (
+        'TabFatNotaFiscalCabeçalho'[Momento da Venda],
+        'TabFatNotaFiscalCabeçalho'[Momento da Entrega],
+        DAY
+    )
+)
+
+
+Prazo de Entrega = [Prazo de Entrega (Média)]
+
+Notas Fiscais = COUNT('TabFatNotaFiscalCabeçalho'[Número da Nota Fiscal])
+
+Itens = COUNT(TabFatNotaFiscalItem[Número da Nota Fiscal])
+
+Faturado (Soma) = 
+SUMX (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado (Média) = 
+AVERAGEX (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado (Mínimo) = 
+MINX (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado (Máximo) = 
+MAXX (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado (Desvio Padrão) = 
+STDEVX.P (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado (Variação) = 
+VARX.P (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado (Mediana) = 
+MEDIANX (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+Faturado () = 
+X (
+    TabFatNotaFiscalItem,
+    TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+        * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+        + RELATED ( 'TabDimMunicípio'[Valor Frete] )
+)
+
+
+Norte = CALCULATE([Faturado],'TabDimRegião'[Nome da Região] = "Norte" )
+
+Nordeste = CALCULATE([Faturado],'TabDimRegião'[Nome da Região] = "Nordeste" )
+
+Sudeste = CALCULATE([Faturado],'TabDimRegião'[Nome da Região] = "Sudeste" )
+
+Sul = CALCULATE([Faturado],'TabDimRegião'[Nome da Região] = "Sul" )
+
+Centro-Oeste = CALCULATE([Faturado],'TabDimRegião'[Nome da Região] = "Centro-Oeste" )
+
+Brasil = CALCULATE([Faturado],ALL('TabDimRegião'[Nome da Região]) )
+
+Ranking de Vendedores = RANKX(ALL(TabDimVendedor[Nome do Vendedor]),[Faturado])
+
+Ranking de Clientes = RANKX(ALL(TabDimCliente[Nome do Cliente]),[Faturado])
+
+Meta Camisetas = SUM(TabFatMetaVendas[Meta em Quantidade])
+
+Meta Faturado = SUM(TabFatMetaVendas[Meta em Valores])
+
+Divisor = SELECTEDVALUE(TabDimUnidade[Divisor])
+
+Meta Faturado = 
+SUMX (
+    TabFatMetaVendas,
+    DIVIDE ( TabFatMetaVendas[Meta em Valores], [Divisor] )
+)
+// SUM(TabFatMetaVendas[Meta em Valores])
+
+
+Faturado (Soma) =
+SUMX (
+    TabFatNotaFiscalItem,
+    DIVIDE (
+        TabFatNotaFiscalItem[Quantidade] * RELATED ( TabDimProduto[Preço] )
+            * ( 1 - RELATED ( TabDimCategoria[Percentual de Desconto] ) )
+            + RELATED ( 'TabDimMunicípio'[Valor Frete] ),
+        [Divisor]
+    )
+)
+
+AA = CALCULATE([Faturado],SAMEPERIODLASTYEAR('TabDimCalendário'[Data Referência]))
+
+Δ =
+IF ( [AA] = BLANK (), BLANK (), [AC] - [AA] )
+
+Δ% = DIVIDE([Δ],[AA])
+
+Δℹ️ = 
+SWITCH (
+    TRUE (),
+    [Δ%] = BLANK (), BLANK (),
+    [Δ%] > 0, "TriangleHigh",
+    [Δ%] < 0, "TriangleLow",
+    [Δ%] = 0, "TriangleMedium"
+)
+
+
+
+Categoria = SELECTEDVALUE(TabDimCategoria[Categoria])
+
+Estampa = SELECTEDVALUE(TabDimEstampa[Nome da Estampa])
+
+UF = SELECTEDVALUE(TabDimUF[Nome da UF])
+
+Ranking de Municípios = 
+RANKX ( ALL ( 'TabDimMunicípio'[Nome do Município] ), [Faturado] )
+
+
+
+
+
+
+
+

@@ -1,0 +1,76 @@
+Atualização = 
+FORMAT (
+    MAX ( 'TabDimAtualização'[Momento da Última Atualização] ),
+    "ddd dd/mm/yyyy",
+    "pt-br"
+)
+
+Divisor = 
+SELECTEDVALUE ( TabDimUnidade[Divisor], 1 )
+
+Exemplares (Soma) = 
+SUMX ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares (Média) = 
+AVERAGEX ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares (Mínimo) = 
+MINX ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares (Máximo) = 
+MAXX ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares (Desvio Padrão) = 
+STDEVX.S ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares (Variação) = 
+VARX.S ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares (Mediana) = 
+MEDIANX ( TabDimLivros, DIVIDE ( TabDimLivros[Exemplares], [Divisor] ) )
+
+Exemplares = 
+[Exemplares (Soma)]
+
+Títulos = DISTINCTCOUNT(TabDimLivros[Título])
+
+Autores = DISTINCTCOUNT(TabDimLivros[Autor])
+
+Tradutores = DISTINCTCOUNTNOBLANK(TabDimLivros[Tradutor])
+
+Ilustradores = DISTINCTCOUNTNOBLANK(TabDimLivros[Ilustrador])
+
+Editoras = DISTINCTCOUNT(TabDimLivros[Editora])
+
+Categorias = DISTINCTCOUNT(TabDimLivros[Categoria])
+
+Anos = DISTINCTCOUNT(TabDimLivros[Ano])
+
+Σ Exemplares = CALCULATE([Exemplares],ALL(TabDimLivros))
+
+Participação = DIVIDE([Exemplares], [Σ Exemplares] )
+
+Σ Exemplares = CALCULATE([Exemplares],ALLEXCEPT( TabDimLivros, TabDimLivros[Ano] ))
+
+Título = SELECTEDVALUE(TabDimLivros[Título])
+
+Editora = SELECTEDVALUE(TabDimLivros[Editora])
+
+Categoria = SELECTEDVALUE(TabDimCategorias[Categoria + Emoji])
+
+Ano = SELECTEDVALUE(TabDimLivros[Ano])
+
+Autor = SELECTEDVALUE(TabDimLivros[Autor])
+
+
+
+
+
+
+
+
+
+
+
+
+

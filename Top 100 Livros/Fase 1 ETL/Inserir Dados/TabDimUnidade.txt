@@ -1,0 +1,4 @@
+# Unidade	Unidade	Divisor
+1	R$	1
+2	R$ ÷ k	1.000
+3	R$ ÷ m	1.000.000

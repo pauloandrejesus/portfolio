@@ -1,0 +1,6 @@
+# Unidade	Unidade	Divisor
+1	Original	 1 
+2	Milhares	 1.000 
+3	Milhões	 1.000.000 
+4	Bilhões	 1.000.000.000 
+5	Trilhões	 1.000.000.000.000 

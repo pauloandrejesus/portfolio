@@ -1,0 +1,8 @@
+let
+    Fonte = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W0lOKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Coluna 1" = _t]),
+    #"Personalização Adicionada" = Table.AddColumn(Fonte, "Momento da Última Atualização", each DateTimeZone.LocalNow()),
+    #"Tipo Alterado" = Table.TransformColumnTypes(#"Personalização Adicionada",{{"Coluna 1", type text}, {"Momento da Última Atualização", type datetimezone}}),
+    #"Hora Local Calculada" = Table.TransformColumns(#"Tipo Alterado",{{"Momento da Última Atualização", DateTimeZone.ToLocal, type datetimezone}}),
+    #"Colunas Removidas" = Table.RemoveColumns(#"Hora Local Calculada",{"Coluna 1"})
+in
+    #"Colunas Removidas"

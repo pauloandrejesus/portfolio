@@ -1,0 +1,8 @@
+Site
+https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/aplicacao#!/recursos/CotacaoDolarDia
+
+
+URL Get
+https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='01-01-2020'&@dataFinalCotacao='12-31-2022'&$top=10000&$skip=0&$format=json&$select=cotacaoVenda,dataHoraCotacao
+
+https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='" & #"Data de Início" & "'&@dataFinalCotacao='" & #"Data de Término" & "'&$top=10000&$skip=0&$format=json&$select=cotacaoVenda,dataHoraCotacao

@@ -1,0 +1,68 @@
+﻿TabCalendárioAux
+
+Menor Entrada = 
+MIN ( TabUnidades[Entrada] )
+
+Menor Saída = 
+MIN ( TabUnidades[Saída] )
+
+Menor Data = 
+MIN( [Menor Entrada]; [Menor Saída] )
+
+Maior Entrada = 
+MAX ( TabUnidades[Entrada] )
+
+Maior Saída = 
+MAX ( TabUnidades[Saída] )
+
+Maior Data = 
+MAX ( [Maior Entrada]; [Maior Saída] )
+
+TabCalendário = 
+ADDCOLUMNS (
+    CALENDAR ( 
+               [Menor Data] ); 
+               [Maior Data] ) 
+             );
+    "Data (AAAAMMDD)"; FORMAT ( [Date]; "YYYYMMDD" );
+    "Ano"; FORMAT ( [Date]; "YYYY" );
+    "Número do Trimestre"; FORMAT ( [Date]; "Q" );
+    "Trimestre"; FORMAT ( [Date]; "Q" ) & "º trimestre";
+    "Trimestre (Abreviado)"; FORMAT ( [Date]; "Q" ) & "º trim";
+    "Ano/Trimestre"; FORMAT ( [Date]; "YYYY" ) & "/" & FORMAT ( [Date]; "Q" );
+    "Número do Mês"; FORMAT ( [Date]; "MM" );
+    "Ano/Mês"; FORMAT ( [Date]; "YYYY/MM" );
+    "Ano/Mês (Abreviado)"; FORMAT ( [Date]; "YYYY/mmm" );
+    "Mês"; FORMAT ( [Date]; "mmmm" );
+    "Mês (Abreviado)"; FORMAT ( [Date]; "mmm" );
+    "Semana"; WEEKNUM ( [Date] );
+    "Número do Dia da Semana"; WEEKDAY ( [Date] );
+    "Número da Quinzena"; IF ( DAY ( [Date] ) <= 15; 1; 2 );
+    "Quinzena"; IF ( DAY ( [Date] ) <= 15; 1; 2 ) & "ª quinzena";
+    "Quinzena (Abreviado)"; IF ( DAY ( [Date] ) <= 15; 1; 2 ) & "ª quinz";
+    "Dia da Semana"; FORMAT ( [Date]; "dddd" );
+    "Dia da Semana (Abreviado)"; FORMAT ( [Date]; "ddd" );
+    "Dia"; FORMAT ( [Date]; "dd" );
+    "Horas Úteis"; IF ( WEEKDAY ( [Date]; 2 ) >= 6; 0; 8 );
+    "Fiscal Year"; "FY"
+        & IF (
+            MONTH ( [Date] ) >= 11;
+            FORMAT ( YEAR ( [Date] ) - 2000 + 1; "00" );
+            FORMAT ( YEAR ( [Date] ) - 2000; "00" )
+        );
+    "Quarter"; SWITCH (
+        MONTH ( [Date] );
+        1; "Q1";
+        2; "Q2";
+        3; "Q2";
+        4; "Q2";
+        5; "Q3";
+        6; "Q3";
+        7; "Q3";
+        8; "Q4";
+        9; "Q4";
+        10; "Q4";
+        11; "Q1";
+        12; "Q1"
+    )
+)

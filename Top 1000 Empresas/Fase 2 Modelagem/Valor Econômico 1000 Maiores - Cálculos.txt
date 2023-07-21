@@ -1,0 +1,62 @@
+﻿--[ Power BI / Coluna ]--------------------------------------------------------------------------
+* Cálculo feito na modelagem e visível em Dados e Relatório (Baixa Performance)
+
+TabRanking1000Maiores
+
+Δ =
+IF (
+    TabRanking1000Maiores[Classificação 2017] = BLANK ();
+    BLANK ();
+    TabRanking1000Maiores[Classificação 2017] - TabRanking1000Maiores[Classificação 2018]
+)
+
+
+Δ (i) =
+IF ( [Δ] > 0; "↑"; IF ( [Δ] < 0; "↓"; IF ( [Δ] = 0; "↔"; "*" ) ) )
+
+
+Δ (i) =
+SWITCH (
+    TRUE ();
+    ISBLANK ( [Δ] ); "*";
+    TabRanking1000Maiores[Δ] > 0; "↑";
+    TabRanking1000Maiores[Δ] < 0; "↓";
+    TabRanking1000Maiores[Δ] = 0; "↔"
+)
+
+
+--[ Power BI / Medida ]----------------------------------------------------------------------------------
+* Cálculo feito na modelagem e visível somente no Relatório (Alta Performance)
+
+TabReceitaLíquida
+
+Soma =
+SUM ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Média =
+AVERAGE ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Mínimo =
+MIN ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Máximo =
+MAX ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Mediana =
+MEDIAN ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Desvio Padrão =
+STDEV.P ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Variação =
+VAR.P ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )
+
+
+Contagem =
+COUNT ( TabRanking1000Maiores[Receita líquida (em R$ milhões)] )

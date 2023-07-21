@@ -1,0 +1,69 @@
+TabDimCalendário = 
+VAR vDataInicial =
+    MIN (
+        FIRSTDATE ( 'TabFatNotaFiscalCabeçalho'[Data da Venda] ),
+        FIRSTDATE ( TabFatMetaVendas[Data da Meta] )
+    )
+VAR vDataFinal =
+    MAX (
+        LASTDATE ( 'TabFatNotaFiscalCabeçalho'[Data da Venda] ),
+        LASTDATE ( TabFatMetaVendas[Data da Meta] )
+    )
+VAR vLocal = "pt-br"
+VAR vPrimeiroDia = 2
+VAR vCalendario =
+    SELECTCOLUMNS ( CALENDAR ( vDataInicial, vDataFinal ), "Data Referência", [Date] )
+RETURN
+    ADDCOLUMNS (
+        vCalendario,
+        "Data (AAAAMMDD)", FORMAT ( [Data Referência], "YYYYMMDD" ),
+        "Data (ddd dd/mm/aaaa)", FORMAT ( [Data Referência], "DDD DD/MM/YYYY", vLocal ),
+        "Ano", YEAR ( [Data Referência] ),
+        "Semestre #", IF ( MONTH ( [Data Referência] ) <= 6, 1, 2 ),
+        "Semestre",
+            "S"
+                & IF ( MONTH ( [Data Referência] ) <= 6, 1, 2 ),
+        "Trimestre #", QUARTER ( [Data Referência] ),
+        "Trimestre", "T" & FORMAT ( [Data Referência], "Q" ),
+        "Ano/Trimestre", FORMAT ( [Data Referência], "YYYY/Q" ),
+        "Mês #", MONTH ( [Data Referência] ),
+        "Mês", FORMAT ( [Data Referência], "MMMM", vLocal ),
+        "Mês (Abreviado)", FORMAT ( [Data Referência], "mmm", vLocal ), 
+        "Estação #",
+            SWITCH (
+                TRUE (),
+                MONTH ( [Data Referência] ) IN { 12, 01, 02 }, 2,
+                MONTH ( [Data Referência] ) IN { 03, 04, 05 }, 3,
+                MONTH ( [Data Referência] ) IN { 06, 07, 08 }, 4,
+                MONTH ( [Data Referência] ) IN { 09, 10, 11 }, 1
+            ),
+        "Estação",
+            SWITCH (
+                TRUE (),
+                MONTH ( [Data Referência] ) IN { 12, 01, 02 }, "☀️ Verão",
+                MONTH ( [Data Referência] ) IN { 03, 04, 05 }, "🍂 Outono",
+                MONTH ( [Data Referência] ) IN { 06, 07, 08 }, "❄️ Inverno",
+                MONTH ( [Data Referência] ) IN { 09, 10, 11 }, "🌼 Primavera"
+            ),
+        "Estação Cor",
+            SWITCH (
+                TRUE (),
+                MONTH ( [Data Referência] ) IN { 12, 01, 02 }, "#FCD53F",
+                MONTH ( [Data Referência] ) IN { 03, 04, 05 }, "#E19747",
+                MONTH ( [Data Referência] ) IN { 06, 07, 08 }, "#00A6ED",
+                MONTH ( [Data Referência] ) IN { 09, 10, 11 }, "#86D72F"
+            ),
+        "Ano/Mês", FORMAT ( [Data Referência], "YYYY/MM" ),
+        "Ano/Mês (Abreviado)", FORMAT ( [Data Referência], "YYYY/mmm", vLocal ),
+        "Semana #", WEEKNUM ( [Data Referência], vPrimeiroDia ),
+        "Semana", WEEKNUM ( [Data Referência], vPrimeiroDia ) & "ª semana",
+        "Quinzena #", IF ( DAY ( [Data Referência] ) <= 15, 1, 2 ),
+        "Quinzena",
+            "Q"
+                & IF ( DAY ( [Data Referência] ) <= 15, 1, 2 ),
+        "Dia da Semana #", WEEKDAY ( [Data Referência], vPrimeiroDia ),
+        "Dia da Semana", FORMAT ( [Data Referência], "dddd", vLocal ),
+        "Dia da Semana (Abreviado)", FORMAT ( [Data Referência], "ddd", vLocal ),
+        "Fim-de-Semana", FORMAT ( WEEKDAY ( [Data Referência], 2 ) >= 6, "Yes/No", vLocal ),
+        "Dia", DAY ( [Data Referência] )
+    )

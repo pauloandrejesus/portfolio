@@ -1,0 +1,16 @@
+TabUsers
+
+E-mail do Usuário = 
+USERPRINCIPALNAME()
+
+Login do Usuário = 
+USERNAME()
+
+ID do Usuário = 
+USEROBJECTID()
+
+Nome do Usuário =
+LOOKUPVALUE (
+    'TabUsuários'[Nome do Usuário];
+    'TabUsuários'[E-mail do Usuário]; [E-mail do Usuário]
+)

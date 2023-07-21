@@ -1,0 +1,94 @@
+--[ Power Query / Coluna Personalizada ]----------------------------------------------------------------------
+* Cálculo Simples (Sem Funções) feito no Power Query Editor
+
+TabUnidades
+
+IMC = [Peso] / ( [Altura] * [Altura] )
+
+
+--[ Power BI / Coluna ]--------------------------------------------------------------------------
+* Cálculo feito na modelagem e visível em Dados (Baixa Performance)
+
+TabUnidades
+
+Status = 
+IF (
+    TabUnidades[Saída] = BLANK ();
+    "Ativo";
+    "Inativo"
+)
+
+Nome da Classificação IMC = 
+IF(TabUnidades[IMC]<16; "Magreza grave";
+IF(TabUnidades[IMC]<17; "Magreza moderada";
+IF(TabUnidades[IMC]<18,5; "Magreza leve";
+IF(TabUnidades[IMC]<25; "Saudável";
+IF(TabUnidades[IMC]<30; "Sobrepeso";
+IF(TabUnidades[IMC]<35; "Obesidade Grau I";
+IF(TabUnidades[IMC]<40; "Obesidade Grau II (severa)";
+                        "Obesidade Grau III (mórbida)")))))))
+
+Nome da Classificação IMC =
+SWITCH (
+    TRUE ();
+    TabUnidades[IMC] < 16; "Magreza grave";
+    TabUnidades[IMC] < 17; "Magreza moderada";
+    TabUnidades[IMC] < 18,5; "Magreza leve";
+    TabUnidades[IMC] < 25; "Saudável";
+    TabUnidades[IMC] < 30; "Sobrepeso";
+    TabUnidades[IMC] < 35; "Obesidade Grau I";
+    TabUnidades[IMC] < 40; "Obesidade Grau II (severa)";
+    TabUnidades[IMC] >= 40; "Obesidade Grau III (mórbida)"
+)
+ 
+
+Idade = 
+DATEDIFF (
+    TabUnidades[Nascimento];
+    TODAY ();
+    YEAR
+)
+
+Tempo de Casa =
+DATEDIFF (
+    TabUnidades[Entrada];
+    IF ( TabUnidades[Saída] = BLANK (); TODAY (); TabUnidades[Saída] );
+    YEAR
+)
+
+
+--[ Power BI / Medida ]----------------------------------------------------------------------------------
+* Cálculo feito na modelagem e visível somente no Relatório (Alta Performance)
+
+Tabela TabIndicador
+
+IMC Destino = 25
+
+IMC Máximo = 40
+
+IMC Mínimo = 16
+
+IMC Valor = 
+AVERAGE( TabUnidades[IMC] )
+
+
+TabNegócios
+
+Funcionários Ativos =
+CALCULATE ( COUNT ( TabUnidades[Matrícula] ); TabUnidades[Status] = "Ativo" )
+
+
+Funcionários Inativos = 
+CALCULATE ( COUNT ( TabUnidades[Matrícula] ); TabUnidades[Status] = "Inativo" )
+
+
+Funcionários = 
+[Funcionários Ativos] + [Funcionários Inativos] 
+
+
+Funcionários Saudáveis =
+CALCULATE ( [Funcionários]; TabUnidades[Nome da Classificação IMC] = "Saudável" )
+
+
+% Saudáveis = 
+[Funcionários Saudáveis] / [Funcionários]

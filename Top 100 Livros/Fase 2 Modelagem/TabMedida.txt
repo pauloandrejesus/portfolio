@@ -1,0 +1,97 @@
+---[ Painel ]--------------------------
+
+Atualização = 
+FORMAT (
+    MAX ( 'TabAtualização'[Data da Última Atualização] ),
+    "ddd dd/mm/yyyy",
+    "PT-BR"
+)
+
+Divisor = 
+SELECTEDVALUE ( TabUnidade[Divisor] )
+
+---[ Estatística Descritiva ]--------------------------
+
+Soma = 
+VAR vValor =
+    SUM ( TabLivros[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Média = 
+VAR vValor =
+    AVERAGE ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Mínimo = 
+VAR vValor =
+    MIN ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Máximo = 
+VAR vValor =
+    MAX ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Mínimo = 
+VAR vValor = 
+    MIN ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Desvio Padrão = 
+VAR vValor =
+    STDEV.P ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Variação = 
+VAR vValor =
+    VAR.P ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+Mediana = 
+VAR vValor =
+    MEDIAN ( 'TabLivros'[Exemplares] )
+RETURN
+    DIVIDE ( vValor, [Divisor] )
+
+
+---[ Grandes Números ]--------------------------
+
+∑ Exemplares = 
+CALCULATE ( [Exemplares], ALLEXCEPT ( TabLivros, TabLivros[Ano] ) )
+
+Exemplares = 
+[Soma]
+
+Participação = 
+DIVIDE ( [Exemplares], [∑ Exemplares] )
+
+Títulos = 
+DISTINCTCOUNT ( TabLivros[Título] )
+
+Autores = 
+DISTINCTCOUNT ( TabLivros[Autor] )
+
+Tradutores = 
+DISTINCTCOUNTNOBLANK ( TabLivros[Tradutor] )
+
+Ilustradores = 
+DISTINCTCOUNTNOBLANK ( TabLivros[Ilustrador] )
+
+Anos = 
+DISTINCTCOUNT ( TabLivros[Ano] )
+
+Editoras = 
+DISTINCTCOUNT ( TabLivros[Editora] )
+
+Categorias = 
+DISTINCTCOUNT ( TabLivros[Categoria] )
+
+
+

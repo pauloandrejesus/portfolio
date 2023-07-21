@@ -1,0 +1,5 @@
+Site
+As 1000 maiores | Valor Econômico
+
+Get
+https://infograficos.valor.globo.com/valor1000/rankings/ranking-das-1000-maiores/2022
